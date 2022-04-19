@@ -14,8 +14,11 @@ def sms_reply():
     number = request.form['From']
     message_body = request.form['Body']
     resp = MessagingResponse()
-    # Add a message
-    resp.message(f"Hello {number} you said {message_body}")
+    if message_body == 'Weather':
+        resp.message("Its beautiful outside")
+    else:    
+        # Add a message
+        resp.message(f"Hello {number} you said {message_body}")
 
     return str(resp)
 
