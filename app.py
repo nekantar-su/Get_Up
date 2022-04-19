@@ -1,6 +1,5 @@
 from flask import Flask, request, redirect
-from twilio import twiml
-
+from twilio.twiml.messaging_response import MessagingResponse
 
 app = Flask(__name__)
 
@@ -10,10 +9,11 @@ def index():
 
 @app.route("/sms", methods=['POST'])
 def sms_reply():
+    """Respond to incoming calls with a simple text message."""
     # Start our TwiML response
     number = request.form['From']
     message_body = request.form['Body']
-    resp = twiml.Response()
+    resp = MessagingResponse()
     # Add a message
     resp.message(f"Hello {number} you said {message_body}")
 
