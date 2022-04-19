@@ -11,7 +11,7 @@ def index():
 def sms_reply():
     """Respond to incoming calls with a simple text message."""
     # Start our TwiML response
-    resp = MessagingResponse()
+    resp = twiml.MessagingResponse()
     # Add a message
     resp.message("The Robots are coming! Head for the hills!")
 
