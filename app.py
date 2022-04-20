@@ -61,14 +61,15 @@ def sms_reply():
             user_todo= incoming_msg.split('-')[1:]
             #if user_todo[0] == '':
             #    resp.message("Enter a todo")
-            todoList.append(user_todo)
-            resp.message(f"ToDo added {user_todo}.")
+            todoList.append(' '.join(user_todo))
+            resp.message(f"ToDo added {' '.join(user_todo)}.")
             
         except IndexError:
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
 
     elif 'view' in incoming_msg:
-        resp.message("Current ToDo as follows: ")
+        resp.message(f"Current ToDo as follows:{*todoList,} ")
+       
 
     else:    
         # Add a message
