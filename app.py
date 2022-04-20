@@ -12,7 +12,7 @@ def send_message(quotes_list):
     client = Client(account_sid, auth_token)
 
     quote = random.choice(quotes_list)
-    print(quote)
+    #print(quote)
 
     client.messages.create(from_='+17278557240',
                             to='+19179601965',
