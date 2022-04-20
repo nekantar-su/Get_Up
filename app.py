@@ -46,12 +46,29 @@ def sms_reply():
     if 'stock' in incoming_msg:
         try:
             stock = incoming_msg.split(' ')[1]
+            if stock == '':
+                resp.message("Please enter a stock")
+
             resp.message(f"Stock wanted is {stock}")
         except IndexError:
             resp.message("Please enter in correct format. IE: Stock APPL")
 
     elif 'nav' in incoming_msg:
-        resp.message("You have the following options: \n 1: Type Weather to view the weather \n 2: Type a message to see your phone number and typed message \n 3: Type nav to view options ")
+        resp.message("You have the following options: \n 1: Type Weather to view the weather \n 2: Type a message to see your phone number and typed message \n 3: Type nav to view options \n 4: Enter a stock to see its price \n 5: Enter todo - followed by task to add to todo \n 6: Enter view to view ToDo list")
+
+    elif 'todo' in incoming_msg:
+        try:
+            user_todo= incoming_msg.split('-')[1:]
+            #if user_todo[0] == '':
+            #    resp.message("Enter a todo")
+            todoList.append(user_todo)
+            resp.message(f"ToDo added {user_todo}.")
+            
+        except IndexError:
+            resp.message("Please enter in correct format. IE: Todo-Take out garbage")
+
+    elif 'view' in incoming_msg:
+        resp.message("Current ToDo as follows: ")
 
     else:    
         # Add a message
