@@ -44,8 +44,11 @@ def sms_reply():
         resp.message("Its beautiful outside")
 
     if 'stock' in incoming_msg:
-        stock = incoming_msg.split(' ')[1]
-        resp.message(f"Stock wanted is {stock}")
+        try:
+            stock = incoming_msg.split(' ')[1]
+            resp.message(f"Stock wanted is {stock}")
+        except IndexError:
+            resp.message("Please enter in correct format. IE: Stock APPL")
 
     elif 'nav' in incoming_msg:
         resp.message("You have the following options: \n 1: Type Weather to view the weather \n 2: Type a message to see your phone number and typed message \n 3: Type nav to view options ")
