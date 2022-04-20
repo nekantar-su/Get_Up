@@ -14,11 +14,11 @@ def sms_reply():
     number = request.form['From']
     message_body = request.form['Body']
     resp = MessagingResponse()
-    
+
     if message_body.lower() == 'weather':
         resp.message("Its beautiful outside")
 
-    if message_body.lower() == 'help':
+    elif message_body.lower() == 'Nav':
         resp.message("You have the following options: \n 1: Type Weather to view the weather \n 2: Type a message to see your phone number and typed message \n 3: Type help to view options ")
 
     else:    
