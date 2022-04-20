@@ -2,6 +2,22 @@ import random, schedule, time
 import requests
 from twilio.rest import Client
 import os
+from flask import Flask, request, redirect
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+# send a message in the morning
+#schedule.every().day.at("10:45").do(send_message, quotes)
+    schedule.every(1).minutes.do(send_message,quotes)
+    
+    while True:
+        # Checks whether a scheduled task
+        # is pending to run or not
+        schedule.run_pending()
+        time.sleep(2)
+    #return "Hello World!"
 
 quotes = requests.get("https://type.fit/api/quotes").json()
 
@@ -19,12 +35,3 @@ def send_message(quotes_list):
                            body=f" Daily Reminder to Be Great: \n {quote['text']} \n By: {quote['author']} \n Great Day To Have A Day! - Niko"
                            )
 
-# send a message in the morning
-#schedule.every().day.at("10:45").do(send_message, quotes)
-schedule.every(1).minutes.do(send_message,quotes)
-
-while True:
-    # Checks whether a scheduled task
-    # is pending to run or not
-    schedule.run_pending()
-    time.sleep(2)
