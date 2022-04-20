@@ -8,9 +8,6 @@ from requests.exceptions import HTTPError
 quotes = requests.get("https://type.fit/api/quotes").json()
 randQuote = random.choice(quotes)
 
-account_sid = os.environ['TWILIO_ACCOUNT_SID']
-auth_token = os.environ['TWILIO_AUTH_TOKEN']
-client = Client(account_sid, auth_token)
 
 message = client.messages \
                 .create(
