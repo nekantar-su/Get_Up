@@ -9,12 +9,11 @@ from helpers import lookup
 
 app = Flask(__name__)
 scheduler = APScheduler()
+
 quotes = requests.get("https://type.fit/api/quotes").json()
-todoList = []
 
 @app.route("/")
 def index():
-    send_message()
     return "Welcome to the scheduler"
 
 def send_message(quotes_list = quotes):
@@ -104,8 +103,7 @@ def sms_reply():
     return str(resp)
 
 
-
 if __name__ == '__main__':
-    #scheduler.add_job(id = "Scheduled task", func= send_message , trigger = 'interval', seconds = 30)
-    #scheduler.start()
+    scheduler.add_job(id = "Scheduled task", func= send_message , trigger = 'interval', seconds = 30)
+    scheduler.start()
     app.run()
