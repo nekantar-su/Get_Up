@@ -39,32 +39,7 @@ def sms_reply():
     number = request.form['From']
     incoming_msg = request.values.get('Body', '').lower()
     resp = MessagingResponse()
-
-    if 'weather' in incoming_msg:
-        weather_key=os.environ['WEATHER_KEY']
-        try:
-            city = incoming_msg.split(' ')[1]
-            complete_url = "http://api.openweathermap.org/data/2.5/weather?" + "appid=" + weather_key + "&q=" + city + "&units=imperial"
-            x = requests.get(complete_url).json()
-            if x["cod"] != "404":
-                # store the value of "main"
-                # key in variable y
-                y = x["main"]
-                print(y)
- 
-                # store the value corresponding
-                # to the "temp" key of y
-                current_temperature = y["temp"]
-                resp.message(f"Temperature (in fahrenheit) is {str(current_temperature)}!")
-            
-            else:
-                resp.message(" City Not Found ")
-
-
-        except IndexError:
-            resp.message("Please enter correct format: IE: Weather Brooklyn")
         
-
     if 'stock' in incoming_msg:
         try:
             stock = incoming_msg.split(' ')[1]
@@ -93,7 +68,29 @@ def sms_reply():
     elif 'view' in incoming_msg:
         #need to create a database
         resp.message(f"Current ToDo as follows:{*todoList,} ")
-       
+
+    elif 'weather' in incoming_msg:
+        weather_key=os.environ['WEATHER_KEY']
+        try:
+            city = incoming_msg.split(' ')[1]
+            complete_url = "http://api.openweathermap.org/data/2.5/weather?" + "appid=" + weather_key + "&q=" + city + "&units=imperial"
+            x = requests.get(complete_url).json()
+            if x["cod"] != "404":
+                # store the value of "main"
+                # key in variable y
+                y = x["main"]
+                print(y)
+ 
+                # store the value corresponding
+                # to the "temp" key of y
+                current_temperature = y["temp"]
+                resp.message(f"Temperature (in fahrenheit) is {str(current_temperature)} in {city}!")
+            
+            else:
+                resp.message(f"{city} Not Found ")
+
+        except IndexError:
+            resp.message("Please enter correct format: IE: Weather Brooklyn")
 
     else:    
         # Add a message
