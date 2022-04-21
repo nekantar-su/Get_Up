@@ -5,7 +5,7 @@ def lookup(symbol):
     """Look up quote for symbol."""
     # Contact API
     try:
-        api_key = os.environ.get("IEX_API_KEY")
+        api_key = os.environ.get("IEX_KEY")
         url = "https://cloud.iexapis.com/stable/stock/"+symbol+"/quote?token="+api_key
         response = requests.get(url)
         response.raise_for_status()
