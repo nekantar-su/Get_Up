@@ -1,35 +1,15 @@
 from flask import Flask,request
-from flask_apscheduler import APScheduler
-import random
+from apscheduler.schedulers.blocking import BlockingScheduler
 import os
-from twilio.rest import Client
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
 from helpers import lookup
 
 app = Flask(__name__)
-scheduler = APScheduler()
-
-quotes = requests.get("https://type.fit/api/quotes").json()
 
 @app.route("/")
 def index():
     return "Welcome to the scheduler"
-
-def send_message(quotes_list = quotes):
-    account_sid = os.environ['TWILIO_ACCOUNT_SID']
-    auth_token = os.environ['TWILIO_AUTH_TOKEN']
-    twilio_number = os.environ['TWILIO_NUMBER']
-    to_number = os.environ['TO_NUMBER']
-    client = Client(account_sid, auth_token)
-
-    quote = random.choice(quotes_list)
-
-    client.messages.create(from_= twilio_number,
-                            to= to_number,
-                           body=f" Daily Reminder to Be Great: \n {quote['text']} \n By: {quote['author']} \n Great Day To Have A Day! - Niko"
-                           )
-
 
 @app.route("/sms", methods=['POST'])
 def sms_reply():
@@ -84,7 +64,7 @@ def sms_reply():
                 # store the value of "main"
                 # key in variable y
                 y = x["main"]
- 
+
                 # store the value corresponding
                 # to the "temp" key of y
                 current_temperature = y["temp"]
@@ -104,6 +84,4 @@ def sms_reply():
 
 
 if __name__ == '__main__':
-    #scheduler.add_job(id = "Scheduled task", func= send_message , trigger = 'interval', seconds = 30)
-    #scheduler.start()
     app.run()
