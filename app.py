@@ -105,6 +105,6 @@ def sms_reply():
 
 
 if __name__ == '__main__':
-    scheduler.add_job(id = "Scheduled task", func= send_message , trigger = 'interval', seconds = 30)
-    scheduler.start()
+    #scheduler.add_job(id = "Scheduled task", func= send_message , trigger = 'interval', seconds = 30)
+    #scheduler.start()
     app.run()
