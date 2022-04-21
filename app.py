@@ -45,10 +45,10 @@ def sms_reply():
 
             stock =lookup(stock)
 
-            if stock == '' or None:
-                resp.message("Please enter a stock")
-
-            resp.message(f"{stock['name']} is trading at ${stock['price']}!")
+            if stock == '' or stock == None:
+                resp.message("Please enter a valid stock")
+            else:
+                resp.message(f"{stock['name']} is trading at ${stock['price']}!")
 
         except IndexError:
             resp.message("Please enter in correct format. IE: Stock APPL")
