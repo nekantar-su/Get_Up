@@ -41,7 +41,29 @@ def sms_reply():
     resp = MessagingResponse()
 
     if 'weather' in incoming_msg:
-        resp.message("Its beautiful outside")
+        weather_key=os.environ['WEATHER_KEY']
+        try:
+            city = incoming_msg.split(' ')[1]
+            complete_url = "http://api.openweathermap.org/data/2.5/weather?" + "appid=" + weather_key + "&q=" + city + "&units=imperial"
+            x = requests.get(complete_url).json()
+            if x["cod"] != "404":
+                # store the value of "main"
+                # key in variable y
+                y = x["main"]
+                print(y)
+ 
+                # store the value corresponding
+                # to the "temp" key of y
+                current_temperature = y["temp"]
+                resp.message(f"Temperature (in fahrenheit) is {str(current_temperature)}!")
+            
+            else:
+                resp.message(" City Not Found ")
+
+
+        except IndexError:
+            resp.message("Please enter correct format: IE: Weather Brooklyn")
+        
 
     if 'stock' in incoming_msg:
         try:
@@ -61,6 +83,7 @@ def sms_reply():
             user_todo= incoming_msg.split('-')[1:]
             #if user_todo[0] == '':
             #    resp.message("Enter a todo")
+            
             todoList.append(' '.join(user_todo))
             resp.message(f"ToDo added {' '.join(user_todo)}.")
             
@@ -68,6 +91,7 @@ def sms_reply():
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
 
     elif 'view' in incoming_msg:
+        #need to create a database
         resp.message(f"Current ToDo as follows:{*todoList,} ")
        
 
