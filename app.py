@@ -14,6 +14,7 @@ todoList = []
 
 @app.route("/")
 def index():
+    send_message()
     return "Welcome to the scheduler"
 
 def send_message(quotes_list = quotes):
