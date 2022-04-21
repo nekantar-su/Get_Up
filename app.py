@@ -5,7 +5,7 @@ import os
 from twilio.rest import Client
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
-
+from helpers import lookup
 
 app = Flask(__name__)
 scheduler = APScheduler()
@@ -17,7 +17,6 @@ def index():
     return "Welcome to the scheduler"
 
 def send_message(quotes_list = quotes):
-    print("started")
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
     twilio_number = os.environ['TWILIO_NUMBER']
@@ -25,13 +24,11 @@ def send_message(quotes_list = quotes):
     client = Client(account_sid, auth_token)
 
     quote = random.choice(quotes_list)
-    print(quote)
 
     client.messages.create(from_= twilio_number,
                             to= to_number,
                            body=f" Daily Reminder to Be Great: \n {quote['text']} \n By: {quote['author']} \n Great Day To Have A Day! - Niko"
                            )
-    print("reached")
 
 
 @app.route("/sms", methods=['POST'])
@@ -45,12 +42,18 @@ def sms_reply():
     if 'stock' in incoming_msg:
         try:
             stock = incoming_msg.split(' ')[1]
-            if stock == '':
+
+            stock =lookup(stock)
+
+            if stock == '' or None:
                 resp.message("Please enter a stock")
 
-            resp.message(f"Stock wanted is {stock}")
+            resp.message(f"{stock['name']} is trading at ${stock['price']}!")
+
         except IndexError:
             resp.message("Please enter in correct format. IE: Stock APPL")
+        
+
 
     elif 'nav' in incoming_msg:
         resp.message("You have the following options: \n 1: Type Weather to view the weather \n 2: Type a message to see your phone number and typed message \n 3: Type nav to view options \n 4: Enter a stock to see its price \n 5: Enter todo - followed by task to add to todo \n 6: Enter view to view ToDo list")
@@ -81,12 +84,11 @@ def sms_reply():
                 # store the value of "main"
                 # key in variable y
                 y = x["main"]
-                print(y)
  
                 # store the value corresponding
                 # to the "temp" key of y
                 current_temperature = y["temp"]
-                resp.message(f"Temperature (in fahrenheit) is {str(current_temperature)} in {city}!")
+                resp.message(f"Temperature (in fahrenheit) is {str(current_temperature)} degrees in {city}!")
             
             else:
                 resp.message(f"{city} Not Found ")
