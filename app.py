@@ -3,7 +3,7 @@ import os
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
 from helpers import lookup
-import database
+#import database
 
 app = Flask(__name__)
 
@@ -44,7 +44,7 @@ def sms_reply():
             #if user_todo[0] == '':
             #    resp.message("Enter a todo")
             
-            database.addTask(number,user_todo)
+            #database.addTask(number,user_todo)
 
             resp.message(f"ToDo added {' '.join(user_todo)}.")
             
@@ -52,7 +52,6 @@ def sms_reply():
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
 
     elif 'view' in incoming_msg:
-        #need to create a database
 
         resp.message(database.printToDo(number))
 
