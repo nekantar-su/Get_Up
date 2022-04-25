@@ -88,7 +88,7 @@ def sms_reply():
         try:
             user_todo= incoming_msg.split('-')[1:]
             print(user_todo[0])
-            if user_todo[0] == '':
+            if user_todo[0] == '' or user_todo[0] == None:
                 resp.message("No todo listed")
             
             addTask(number,user_todo)
