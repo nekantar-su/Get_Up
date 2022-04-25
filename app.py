@@ -90,7 +90,7 @@ def sms_reply():
             #if user_todo[0] == '':
             #    resp.message("Enter a todo")
             
-            database.addTask(number,user_todo)
+            addTask(number,user_todo)
 
             resp.message(f"ToDo added {' '.join(user_todo)}.")
             
@@ -99,7 +99,7 @@ def sms_reply():
 
     elif 'view' in incoming_msg:
 
-        resp.message(database.printToDo(number))
+        resp.message(printToDo(number))
 
     elif 'weather' in incoming_msg:
         weather_key=os.environ['WEATHER_KEY']
