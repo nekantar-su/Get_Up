@@ -9,7 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
-#------------------------------------------------------------------------------------------
+#----------------------------------DATABASE--------------------------------------------------------
 db_string = f"postgresql://{os.environ['DATABASE_USERNAME']}:{os.environ['DATABASE_PASSWORD']}@{os.environ['DATABASE_HOSTNAME']}/{os.environ['DATABASE_NAME']}"
 
 db = create_engine(db_string)  
@@ -26,8 +26,6 @@ Session = sessionmaker(db)
 session = Session()
 
 base.metadata.create_all(db)
-
-
 
 def getToDo(number):
     todos = session.query(ToDo).filter(number == ToDo.number).all()
@@ -53,7 +51,8 @@ def deleteTask(number,id):
         message = f"Successfully deleted task {id}!"
         return message
 
-    #E----------------------------------------------------------
+    #----------------------------------------------------------------
+
 @app.route("/")
 def index():
     return "Welcome to the scheduler"
