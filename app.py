@@ -99,7 +99,8 @@ def sms_reply():
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
 
     elif 'view' in incoming_msg:
-        return str(resp.message(printToDo(number)))
+        resp.message('ID:1 Task: do laundry')
+        resp.message+=('ID: 2 Task do this')
 
     elif 'weather' in incoming_msg:
         weather_key=os.environ['WEATHER_KEY']
