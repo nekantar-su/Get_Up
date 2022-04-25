@@ -1,9 +1,9 @@
 from flask import Flask,request
-from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
 from helpers import lookup
+import database
 
 app = Flask(__name__)
 
@@ -44,7 +44,8 @@ def sms_reply():
             #if user_todo[0] == '':
             #    resp.message("Enter a todo")
             
-            todoList.append(' '.join(user_todo))
+            database.addTask(number,user_todo)
+
             resp.message(f"ToDo added {' '.join(user_todo)}.")
             
         except IndexError:
@@ -52,7 +53,8 @@ def sms_reply():
 
     elif 'view' in incoming_msg:
         #need to create a database
-        resp.message(f"Current ToDo as follows:{*todoList,} ")
+
+        resp.message(database.printToDo(number))
 
     elif 'weather' in incoming_msg:
         weather_key=os.environ['WEATHER_KEY']
