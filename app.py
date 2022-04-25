@@ -30,7 +30,7 @@ base.metadata.create_all(db)
 
 
 def getToDo(number):
-    todos = session.query(ToDo).filter(number == ToDo.number)
+    todos = session.query(ToDo).filter(number == ToDo.number).all()
     return todos
 
 def addTask(number,task):
