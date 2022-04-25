@@ -100,7 +100,7 @@ def sms_reply():
 
     elif 'view' in incoming_msg:
         list_df = ['hi','bye','dfg']
-        resp.message(''.join(list_df))
+        resp.message(' '.join(list_df))
         
 
     elif 'weather' in incoming_msg:
