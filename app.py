@@ -88,7 +88,7 @@ def sms_reply():
     elif 'todo' in incoming_msg:
         try:
             user_todo= incoming_msg.split('-')[1:]
-         
+            print(user_todo)
             if user_todo[0] == '' or user_todo[0] == None:
                 resp.message("No todo listed")
             else:
