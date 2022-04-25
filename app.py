@@ -87,6 +87,7 @@ def sms_reply():
     elif 'todo' in incoming_msg:
         try:
             user_todo= incoming_msg.split('-')[1:]
+            print(user_todo)
             #if user_todo[0] == '':
             #    resp.message("Enter a todo")
             
@@ -98,7 +99,6 @@ def sms_reply():
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
 
     elif 'view' in incoming_msg:
-
         resp.message(printToDo(number))
 
     elif 'weather' in incoming_msg:
