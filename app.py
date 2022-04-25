@@ -101,7 +101,7 @@ def sms_reply():
         list_todos = getToDo(number)
         output = ''
         for todo in list_todos:
-            output += '\n'+ 'ID: '+todo.id+' Task: '+todo.task
+            output += '\n'+ 'ID: '+str(todo.id)+' Task: '+todo.task
         resp.message(output)
         
 
