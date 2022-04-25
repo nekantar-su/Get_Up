@@ -87,13 +87,13 @@ def sms_reply():
     elif 'todo' in incoming_msg:
         try:
             user_todo= incoming_msg.split('-')[1:]
-            print(user_todo[0])
+         
             if user_todo[0] == '' or user_todo[0] == None:
                 resp.message("No todo listed")
-            
-            addTask(number,user_todo)
+            else:
+                addTask(number,user_todo[0])
 
-            resp.message(f"ToDo added {' '.join(user_todo)}.")
+                resp.message(f"ToDo added {' '.join(user_todo)}.")
             
         except IndexError:
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
