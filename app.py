@@ -109,10 +109,12 @@ def sms_reply():
     elif 'completed' in incoming_msg:
         try:
             task_id= incoming_msg.split('-')[1:]
-            print(task_id)
-        #    resp.message(deleteTask(number,int(task_id)))
             if task_id[0] == '' or task_id[0] == None:
                     resp.message("No task listed")
+
+            else:
+                resp.message(deleteTask(number,int(task_id[0])))
+
         except IndexError:
             resp.message("Please enter in correct format. IE: Completed-Take out garbage")
 
