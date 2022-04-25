@@ -99,6 +99,7 @@ def sms_reply():
 
     elif 'view' in incoming_msg:
         list_todos = getToDo(number)
+        print(list_todos)
         resp.message('\n'.join(list_todos))
         
 
