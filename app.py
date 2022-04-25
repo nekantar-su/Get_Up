@@ -107,10 +107,10 @@ def sms_reply():
         resp.message(output)
     
     elif 'completed' in incoming_msg:
-            task_id= incoming_msg.split('-')[1:]
-            print(task_id)
-        #    resp.message(deleteTask(number,int(task_id)))
-        
+        task_id= incoming_msg.split('-')[1:]
+        print(task_id)
+        resp.message('nade')
+
 
     elif 'weather' in incoming_msg:
         weather_key=os.environ['WEATHER_KEY']
