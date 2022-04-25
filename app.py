@@ -42,14 +42,16 @@ def deleteTask(number,id):
     task_query = session.query(ToDo).filter(id == ToDo.id)
     task = task_query.first()
     if task==None:
-        return f"Task {id} does not exist"
-    if task.number != number:
-        return "Not Authorized"
-
-    task_query.delete(synchronize_session=False)
-    session.commit()
-
-    return f"Successfully deleted task {id}!"
+        message = f"Task {id} does not exist"
+        return message
+    elif task.number != number:
+        message = "Not Authorized"
+        return message
+    else:
+        task_query.delete(synchronize_session=False)
+        session.commit()
+        message = f"Successfully deleted task {id}!"
+        return message
 
     #E----------------------------------------------------------
 @app.route("/")
@@ -103,7 +105,13 @@ def sms_reply():
         for todo in list_todos:
             output += '\n'+ 'ID: '+str(todo.id)+' Task: '+todo.task
         resp.message(output)
-        
+    
+    elif 'completed' in incoming_msg:
+        try:
+            task_id= incoming_msg.split('-')[1:]
+            resp.message(deleteTask(number,task_id))
+        except IndexError:
+            resp.message("Please enter in correct format. IE: Completed-Take out garbage")
 
     elif 'weather' in incoming_msg:
         weather_key=os.environ['WEATHER_KEY']
