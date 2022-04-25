@@ -102,7 +102,7 @@ def sms_reply():
         output = ''
         for todo in list_todos:
             output += '\n'+ todo.task
-        print(output)
+        resp.message(output)
         
 
     elif 'weather' in incoming_msg:
