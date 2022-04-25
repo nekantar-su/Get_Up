@@ -29,10 +29,9 @@ base.metadata.create_all(db)
 
 
 
-def printToDo(number):
+def getToDo(number):
     todos = session.query(ToDo).filter(number == ToDo.number)
-    for todo in todos:
-        print(f"ID: {todo.id} Task: {todo.task} ")
+    return todos
 
 def addTask(number,task):
     newToDo = ToDo(number = number, task = task)
@@ -99,8 +98,8 @@ def sms_reply():
             resp.message("Please enter in correct format. IE: Todo-Take out garbage")
 
     elif 'view' in incoming_msg:
-        list_df = ['hi','bye','dfg']
-        resp.message('\n'.join(list_df))
+        list_todos = getToDo(number)
+        resp.message('\n'.join(list_todos))
         
 
     elif 'weather' in incoming_msg:
