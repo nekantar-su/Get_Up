@@ -107,6 +107,7 @@ def sms_reply():
         resp.message(output)
     
     elif 'completed' in incoming_msg:
+        print('sdfsdf')
         task_id= incoming_msg.split('-')[1:]
         print(task_id)
         resp.message('nade')
