@@ -89,7 +89,7 @@ def sms_reply():
         try:
             user_todo= incoming_msg.split('-')[1:]
             print(user_todo)
-            if user_todo[0] == '' or user_todo[0] == None:
+            if bool(user_todo[0].strip())== False or user_todo[0] == None:
                 resp.message("No todo listed")
             else:
                 addTask(number,user_todo[0])
@@ -109,7 +109,7 @@ def sms_reply():
     elif 'completed' in incoming_msg:
         try:
             task_id= incoming_msg.split('-')[1:]
-            if task_id[0] == '' or task_id[0] == None:
+            if bool(task_id[0].strip() == False) or task_id[0] == None:
                     resp.message("No task listed")
 
             else:
