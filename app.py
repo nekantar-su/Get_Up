@@ -3,7 +3,7 @@ import os
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
 from helpers import lookup
-#import database
+import database
 
 app = Flask(__name__)
 
